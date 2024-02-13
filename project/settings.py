@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'education_process',
+    'user_account',
 ]
 
 MIDDLEWARE = [
@@ -118,7 +119,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+TEACHER = 'teacher'
+SCHOOLCHILD = 'Schoolchild'
+PARENT = 'parent'
 
+AUTH_USER_MODEL = 'user.User'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 

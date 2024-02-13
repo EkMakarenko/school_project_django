@@ -1,15 +1,32 @@
 from django.contrib import admin
 
-from user.models import Teacher, Pupil
+from user.models import User, Teacher, SchoolChild
 
 
 # Register your models here.
 
-@admin.register(Pupil)
-class PupilAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'gender', 'is_teacher')
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    """
+    Users
+    """
+    list_display = ('id', 'get_full_name', 'gender', 'user_status', 'username')
+    list_filter = ('user_status',)
 
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'phone', 'descriptions', 'is_teacher')
+    """
+    Teachers
+    """
+    list_display = ('id', 'get_full_name', 'group_manager', 'position', 'user')
+
+
+@admin.register(SchoolChild)
+class SchoolChildAdmin(admin.ModelAdmin):
+    """
+    Schoolchild's
+    """
+    list_display = ('id', 'get_full_name', 'group', 'user')
+    list_filter = ('group',)
+    search_fields = ('get_full_name',)
