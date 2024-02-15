@@ -1,15 +1,15 @@
 from django.contrib import admin
 
-from education_process.models import Grade, RatingItemStatus, Lesson, Score, GroupSchoolchild
+from education_process.models import Grade, RatingItemStatus, Score, Subject, PupilsGroup
 
 
 # Register your models here.
 
 
-@admin.register(Lesson)
-class LessonAdmin(admin.ModelAdmin):
+@admin.register(Subject)
+class SubjectAdmin(admin.ModelAdmin):
     """
-    Уроки.
+    Subjects
     """
     list_display = ('name',)
 
@@ -17,7 +17,7 @@ class LessonAdmin(admin.ModelAdmin):
 @admin.register(Grade)
 class GradeAdmin(admin.ModelAdmin):
     """
-    Классы.
+    Grades
     """
     list_display = ('number', 'symbol')
 
@@ -25,15 +25,15 @@ class GradeAdmin(admin.ModelAdmin):
 @admin.register(RatingItemStatus)
 class RatingItemStatusAdmin(admin.ModelAdmin):
     """
-    Статусы оценок.
+    Marks status.
     """
     list_display = ('name',)
 
 
-@admin.register(GroupSchoolchild)
-class GroupSchoolchildAdmin(admin.ModelAdmin):
+@admin.register(PupilsGroup)
+class PupilsGroupAdmin(admin.ModelAdmin):
     """
-    Оценки.
+    Group of pupils
     """
     list_display = ('grade', 'create_group', 'updated', 'created',)
 
@@ -41,9 +41,9 @@ class GroupSchoolchildAdmin(admin.ModelAdmin):
 @admin.register(Score)
 class ScoreAdmin(admin.ModelAdmin):
     """
-    Оценки.
+    Marks
     """
-    list_display = ('schoolchild', 'lesson', 'score', 'created', 'updated', 'group')
-    # list_filter = ('created', 'score', 'lesson', 'group')
+    list_display = ('pupil', 'subject', 'score', 'created', 'updated', 'group')
+    # list_filter = ('created', 'score', 'subject', 'group')
 
 

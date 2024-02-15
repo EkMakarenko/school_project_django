@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user',
     'education_process',
     'user_account',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -82,9 +83,13 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': int(os.getenv('POSTGRES_PORT'))
     }
 }
 
@@ -120,8 +125,7 @@ USE_I18N = True
 USE_TZ = True
 
 TEACHER = 'teacher'
-SCHOOLCHILD = 'Schoolchild'
-PARENT = 'parent'
+PUPIL = 'pupil'
 
 AUTH_USER_MODEL = 'user.User'
 # Static files (CSS, JavaScript, Images)

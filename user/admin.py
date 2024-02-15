@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from user.models import User, Teacher, SchoolChild
+from user.models import User, Teacher, Pupil
 
 
 # Register your models here.
@@ -22,8 +22,8 @@ class TeacherAdmin(admin.ModelAdmin):
     list_display = ('id', 'get_full_name', 'group_manager', 'position', 'user')
 
 
-@admin.register(SchoolChild)
-class SchoolChildAdmin(admin.ModelAdmin):
+@admin.register(Pupil)
+class PupilAdmin(admin.ModelAdmin):
     """
     Schoolchild's
     """
