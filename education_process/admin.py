@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from education_process.models import Grade, RatingItemStatus, Score, Subject, PupilsGroup
+from education_process.models import Grade, RatingItemStatus, Score, Subject
 
 
 # Register your models here.
@@ -19,7 +19,7 @@ class GradeAdmin(admin.ModelAdmin):
     """
     Grades
     """
-    list_display = ('number', 'symbol')
+    list_display = ('grade',)
 
 
 @admin.register(RatingItemStatus)
@@ -30,12 +30,12 @@ class RatingItemStatusAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
-@admin.register(PupilsGroup)
-class PupilsGroupAdmin(admin.ModelAdmin):
-    """
-    Group of pupils
-    """
-    list_display = ('grade', 'create_group', 'updated', 'created',)
+# @admin.register(PupilsGroup)
+# class PupilsGroupAdmin(admin.ModelAdmin):
+#     """
+#     Group of pupils
+#     """
+#     list_display = ('grade',)
 
 
 @admin.register(Score)
@@ -43,7 +43,6 @@ class ScoreAdmin(admin.ModelAdmin):
     """
     Marks
     """
-    list_display = ('pupil', 'subject', 'score', 'created', 'updated', 'group')
-    # list_filter = ('created', 'score', 'subject', 'group')
+    list_display = ('pupil', 'subject', 'score', 'created', 'group')
 
 

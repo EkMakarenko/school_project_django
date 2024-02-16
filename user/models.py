@@ -4,7 +4,8 @@ from django.contrib.auth.models import AbstractUser, UserManager
 
 from project import settings
 from project.settings import TEACHER, PUPIL
-from education_process.models import PupilsGroup, Subject
+from education_process.models import Subject, Grade
+
 
 # Create your models here.
 
@@ -25,7 +26,6 @@ class User(AbstractUser):
     birth_date = models.DateField('Birth_date', blank=True, null=True)
     description = models.TextField('Description', blank=True)
     user_status = models.CharField('User status', choices=USER_STATUS_CHOICES, max_length=15)
-    # updated = models.DateField('Update date', auto_now=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
@@ -35,9 +35,9 @@ class User(AbstractUser):
 
     @property
     def get_full_name(self):
-        return f'{self.last_name} {self.first_name}'
+        return f'{self.last_name} {self.first_name} {self.middle_name}'
 
-    objects = UserManager()
+    # objects = UserManager()
 
 
 class Teacher(models.Model):
@@ -45,15 +45,18 @@ class Teacher(models.Model):
     Teacher
     """
     position = models.CharField('Position', max_length=100)
-    group_manager = models.ForeignKey(PupilsGroup, related_name='teacher',
+    group_manager = models.ForeignKey(Grade, related_name='teacher',
                                       verbose_name='Class teacher',
                                       on_delete=models.SET_NULL, null=True, blank=True)
-    subjects = models.ManyToManyField(Subject, related_name='teachers', verbose_name='Teach subject')
+    subjects = models.ManyToManyField(Subject, related_name='subject', verbose_name='Teach subject', blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='teacher', on_delete=models.CASCADE)
 
     @property
-    def get_full_name(self):
-        return f'{self.user.last_name} {self.user.first_name}'
+    def full_name(self):
+        return f'{self.user.last_name} {self.user.first_name} {self.user.middle_name}'
+
+    def get_description(self):
+        return {self.user.description}
 
     class Meta:
         verbose_name = 'Teacher'
@@ -64,12 +67,15 @@ class Pupil(models.Model):
     """
     Pupil
     """
-    group = models.ForeignKey(PupilsGroup, related_name='pupils', verbose_name='Studying a ___th grade',
+    group = models.ForeignKey(Grade, related_name='pupils', verbose_name='Studying a ___th grade',
                               on_delete=models.CASCADE)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='pupils', on_delete=models.CASCADE)
 
-    def get_full_name(self):
-        return f'{self.user.last_name} {self.user.first_name}'
+    def __str__(self):
+        return self.group
+
+    def full_name(self):
+        return f'{self.user.last_name} {self.user.first_name} {self.user.middle_name}'
 
     class Meta:
         verbose_name = 'Pupil'
