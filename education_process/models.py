@@ -16,9 +16,6 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
-    def get_subject(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Subject'
         verbose_name_plural = 'List of school subjects'
@@ -47,23 +44,12 @@ class RatingItemStatus(models.Model):
     def __str__(self):
         return self.name
 
+    def get_score_status(self):
+        return self.name
+
     class Meta:
-        verbose_name = 'Mark status'
-        verbose_name_plural = 'List of marks status'
-
-
-# class PupilsGroup(models.Model):
-#     """
-#     Group of pupils
-#     """
-#     grade = models.OneToOneField(Grade, related_name='Class', on_delete=models.CASCADE, verbose_name='Class name', limit_choices_to={'user_status': PUPIL})
-#
-#     def __str__(self):
-#         return self.grade.__str__()
-#
-#     class Meta:
-#         verbose_name = 'Class of pupil'
-#         verbose_name_plural = 'Class of pupils'
+        verbose_name = 'Score status'
+        verbose_name_plural = 'List of scores status'
 
 
 class Score(models.Model):
@@ -90,10 +76,22 @@ class Score(models.Model):
                                 null=True, limit_choices_to={'user_status': TEACHER}, verbose_name='Teacher')
     score = models.SmallIntegerField(choices=SCORE_CHOICES, verbose_name='Mark')
     score_status = models.ForeignKey(RatingItemStatus, on_delete=models.CASCADE, verbose_name='Mark status')
-    created = models.DateField(verbose_name='Date of creation', auto_now=True)  #format='%Y-%m-%d', input_formats=['%Y-%m-%d', 'iso-8601']
+    created = models.DateField(verbose_name='Date of creation', blank=True, null=True)  #format='%Y-%m-%d', input_formats=['%Y-%m-%d', 'iso-8601']
 
     def __str__(self):
         return str(self.score)
+
+    def get_subject(self):
+        return f'{self.subject.name}'
+
+    def get_pupil(self):
+        return f'{self.pupil.last_name} {self.pupil.first_name} {self.pupil.middle_name}'
+
+    def get_group(self):
+        return f'{self.group.grade}'
+
+    def get_score_status(self):
+        return f'{self.score_status.name}'
 
     class Meta:
         verbose_name = 'Gradebook'
