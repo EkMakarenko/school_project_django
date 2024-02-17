@@ -1,6 +1,9 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
+from django_filters import rest_framework as django_filters
 
+from education_process.filters import ScoreFilter
 from education_process.models import Grade, RatingItemStatus, Score, Subject
+from education_process.pagination import ScorePagination, RatingItemStatusPagination, SubjectPagination, GradePagination
 from education_process.serializers import (SubjectListSerializer, GradeListSerializer, ScoreListSerializer,
                                            RatingItemStatusListSerializer, SubjectCreateSerializer,
                                            ScoreCreateSerializer, SubjectUpdateSerializer,
@@ -15,6 +18,7 @@ from education_process.serializers import (SubjectListSerializer, GradeListSeria
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectListSerializer
+    pagination_class = SubjectPagination
     serializer_classes = {
         'list': SubjectListSerializer,
         'create': SubjectCreateSerializer,
@@ -29,6 +33,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
 class GradeViewSet(viewsets.ModelViewSet):
     queryset = Grade.objects.all()
     serializer_class = GradeListSerializer
+    pagination_class = GradePagination
     serializer_classes = {
         'list': GradeListSerializer,
         'create': GradeCreateSerializer,
@@ -43,6 +48,7 @@ class GradeViewSet(viewsets.ModelViewSet):
 class RatingItemStatusViewSet(viewsets.ModelViewSet):
     queryset = RatingItemStatus.objects.all()
     serializer_class = RatingItemStatusListSerializer
+    pagination_class = RatingItemStatusPagination
     serializer_classes = {
         'list': RatingItemStatusListSerializer,
         'create': RatingItemStatusCreateSerializer,
@@ -56,6 +62,10 @@ class RatingItemStatusViewSet(viewsets.ModelViewSet):
 
 class ScoreViewSet(viewsets.ModelViewSet):
     queryset = Score.objects.all()
+    filter_backends = (django_filters.DjangoFilterBackend, filters.OrderingFilter)
+    filterset_class = ScoreFilter
+    pagination_class = ScorePagination
+    ordering_fields = ('pupil', 'subject', 'score', 'created', 'group')
     serializer_class = ScoreListSerializer
     serializer_classes = {
         'list': ScoreListSerializer,

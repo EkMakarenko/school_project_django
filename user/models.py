@@ -74,6 +74,9 @@ class Pupil(models.Model):
     def __str__(self):
         return self.group
 
+    def __str__(self):
+        return self.full_name()
+
     def full_name(self):
         return f'{self.user.last_name} {self.user.first_name} {self.user.middle_name}'
 

@@ -107,7 +107,6 @@ class ScoreUpdateSerializer(serializers.ModelSerializer):
 
 class ScoreRetrieveSerializer(serializers.ModelSerializer):
 
-
     class Meta:
         model = Score
         fields = ('id', 'get_pupil', 'get_subject', 'score', 'get_score_status', 'created', 'get_group')
