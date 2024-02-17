@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from education_process.models import Grade, RatingItemStatus, Score, Subject
+from education_process.services import def_serializer
 
 
 class SubjectListSerializer(serializers.ModelSerializer):
@@ -85,20 +86,7 @@ class ScoreListSerializer(serializers.ModelSerializer):
         model = Score
         fields = ('id', 'get_pupil', 'get_subject', 'score', 'get_score_status', 'created', 'get_group')
 
-        def get_subject(self, obj):
-            return str(obj.subject.get_subject)
-
-        def get_pupil(self, obj):
-            return str(obj.pupil.get_pupil)
-
-        def get_group(self, obj):
-            return obj.grade.get_grade
-
-        def get_score_status(self, obj):
-            return obj.subject.get_score_status
-
-        def get_group(self, obj):
-            return obj.grade.get_grade
+    def_serializer()
 
 
 class ScoreCreateSerializer(serializers.ModelSerializer):
@@ -114,9 +102,12 @@ class ScoreUpdateSerializer(serializers.ModelSerializer):
         model = Score
         fields = ('subject', 'group', 'pupil', 'score', 'score_status', 'created')
 
+    def_serializer()
+
 
 class ScoreRetrieveSerializer(serializers.ModelSerializer):
 
+
     class Meta:
         model = Score
-        fields = ('subject', 'group', 'pupil', 'score', 'score_status', 'created')
+        fields = ('id', 'get_pupil', 'get_subject', 'score', 'get_score_status', 'created', 'get_group')
