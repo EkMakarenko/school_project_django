@@ -30,14 +30,6 @@ class RatingItemStatusAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
-# @admin.register(PupilsGroup)
-# class PupilsGroupAdmin(admin.ModelAdmin):
-#     """
-#     Group of pupils
-#     """
-#     list_display = ('grade',)
-
-
 @admin.register(Score)
 class ScoreAdmin(admin.ModelAdmin):
     """

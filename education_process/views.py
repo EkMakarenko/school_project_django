@@ -1,5 +1,6 @@
 from rest_framework import viewsets, filters
 from django_filters import rest_framework as django_filters
+from rest_framework.permissions import IsAuthenticated
 
 from education_process.filters import ScoreFilter
 from education_process.models import Grade, RatingItemStatus, Score, Subject
@@ -66,6 +67,7 @@ class ScoreViewSet(viewsets.ModelViewSet):
     filterset_class = ScoreFilter
     pagination_class = ScorePagination
     ordering_fields = ('pupil', 'subject', 'score', 'created', 'group')
+    # permission_classes = [IsAuthenticated]
     serializer_class = ScoreListSerializer
     serializer_classes = {
         'list': ScoreListSerializer,

@@ -9,6 +9,9 @@ python-dotenv = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
 django-filter = "*"
+pillow = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

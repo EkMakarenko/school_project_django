@@ -1,17 +1,31 @@
 from rest_framework import viewsets, filters
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
+from authentication.serializers import UserSerializer
+from user.services import TeacherService
 from user.models import Teacher, Pupil, User
 from user.pagination import PupilPagination, TeacherPagination
-from user.serializers import PupilListSerializer, TeacherListSerializer, UserListSerializer, PupilCreateSerializer, \
-    TeacherCreateSerializer, TeacherUpdateSerializer, TeacherRetrieveSerializer, PupilRetrieveSerializer, \
-    PupilUpdateSerializer
+from user.serializers import (
+    PupilListSerializer,
+    TeacherListSerializer,
+    PupilUpdateSerializer,
+    PupilCreateSerializer,
+    PupilRetrieveSerializer,
+    TeacherCreateSerializer,
+    TeacherUpdateSerializer,
+    TeacherRetrieveSerializer,
+    TeacherImageUpdateSerializer
+)
+
 
 
 # Create your views here.
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserListSerializer
+    serializer_class = UserSerializer
 
 
 class TeacherViewSet(viewsets.ModelViewSet):
@@ -26,10 +40,24 @@ class TeacherViewSet(viewsets.ModelViewSet):
         'create': TeacherCreateSerializer,
         'retrieve': TeacherRetrieveSerializer,
         'update': TeacherUpdateSerializer,
+        'update_image': TeacherImageUpdateSerializer,
+
     }
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, self.serializer_class)
+
+
+    @action(detail=True, methods=['patch'], url_path='update-image')
+    def update_image(self, request, pk=None):
+        teacher = self.get_object()
+        serializer = self.serializer_classes.get(self.action, self.serializer_class)(teacher, request.data, partial=True)
+
+        TeacherService.update_image(serializer=serializer, instance=teacher, request=request)
+
+        self.perform_update(serializer)
+
+        return Response(serializer.data)
 
 
 class PupilViewSet(viewsets.ModelViewSet):
@@ -39,6 +67,7 @@ class PupilViewSet(viewsets.ModelViewSet):
     pagination_class = PupilPagination
     ordering_fields = ('id', 'user__last_name', 'group',)
     search_fields = ('user__last_name', 'user__first_name', 'group',)
+    permission_classes = [IsAuthenticated]
     serializer_classes = {
         'list': PupilListSerializer,
         'create': PupilCreateSerializer,

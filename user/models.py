@@ -1,10 +1,11 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 
 
 from project import settings
-from project.settings import TEACHER, PUPIL
 from education_process.models import Subject, Grade
+from project.settings import TEACHER, PUPIL
 
 
 # Create your models here.
@@ -22,6 +23,7 @@ class User(AbstractUser):
     first_name = models.CharField('First name', max_length=130, blank=True)
     middle_name = models.CharField('Middle name', max_length=130, blank=True)
     email = models.EmailField('Email', unique=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)
     gender = models.CharField('Gender', choices=GENDER_CHOICES, max_length=1)
     birth_date = models.DateField('Birth_date', blank=True, null=True)
     description = models.TextField('Description', blank=True)
@@ -37,7 +39,7 @@ class User(AbstractUser):
     def get_full_name(self):
         return f'{self.last_name} {self.first_name} {self.middle_name}'
 
-    # objects = UserManager()
+    objects = UserManager()
 
 
 class Teacher(models.Model):
@@ -50,6 +52,7 @@ class Teacher(models.Model):
                                       on_delete=models.SET_NULL, null=True, blank=True)
     subjects = models.ManyToManyField(Subject, related_name='subject', verbose_name='Teach subject', blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='teacher', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='teachers/', blank=True, null=True)
 
     @property
     def full_name(self):
@@ -57,6 +60,9 @@ class Teacher(models.Model):
 
     def get_description(self):
         return {self.user.description}
+
+    def get_phone(self):
+        return {self.user.phone}
 
     class Meta:
         verbose_name = 'Teacher'

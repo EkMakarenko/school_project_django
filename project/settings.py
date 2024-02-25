@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 
@@ -35,26 +36,66 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split()
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+CORE_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+]
+
+LOCAL_APPS = [
     'user',
     'education_process',
     'user_account',
+    'authentication',
+]
+
+THIRD_PARTY_APPS = [
     'rest_framework',
     'django_filters',
+    'djoser',
+    'rest_framework_simplejwt',
 ]
+
+INSTALLED_APPS = CORE_APPS + LOCAL_APPS + THIRD_PARTY_APPS
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+        }
+    },
+    'USE_SESSION_AUTH': False,
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKEND': (
         'django_filters.rest_framework.DjangoFilterBackend',
+        ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         )
     }
 
+SIMPLE_JWT = {
+    'AUTH_HEADERS_TYPES': ('JWT', ),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=3)
+}
+
+DJOSER = {
+    'USER': 'authentication.CustomUser',
+    'SERIALIZERS': {
+        'user': 'authentication.serializers.UserSerializer',
+        'user_create': 'authentication.serializers.UserCreateSerializer',
+    },
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'PASSWORD_RESET_CONFIRM_URL': '/api/auth/users/reset_password_confirm/{uid}/{token}'  # frontend url
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -140,6 +181,9 @@ AUTH_USER_MODEL = 'user.User'
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
