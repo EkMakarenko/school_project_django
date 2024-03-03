@@ -1,12 +1,8 @@
 from rest_framework import viewsets, filters
+from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
-from authentication.serializers import UserSerializer
-from user.services import TeacherService
-from user.models import Teacher, Pupil, User
-from user.pagination import PupilPagination, TeacherPagination
 from user.serializers import (
     PupilListSerializer,
     TeacherListSerializer,
@@ -18,10 +14,13 @@ from user.serializers import (
     TeacherRetrieveSerializer,
     TeacherImageUpdateSerializer
 )
-
-
+from user.services import TeacherService
+from user.models import Teacher, Pupil, User
+from authentication.serializers import UserSerializer
+from user.pagination import PupilPagination, TeacherPagination
 
 # Create your views here.
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -41,12 +40,10 @@ class TeacherViewSet(viewsets.ModelViewSet):
         'retrieve': TeacherRetrieveSerializer,
         'update': TeacherUpdateSerializer,
         'update_image': TeacherImageUpdateSerializer,
-
     }
 
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, self.serializer_class)
-
 
     @action(detail=True, methods=['patch'], url_path='update-image')
     def update_image(self, request, pk=None):
@@ -67,7 +64,7 @@ class PupilViewSet(viewsets.ModelViewSet):
     pagination_class = PupilPagination
     ordering_fields = ('id', 'user__last_name', 'group',)
     search_fields = ('user__last_name', 'user__first_name', 'group',)
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated,]
     serializer_classes = {
         'list': PupilListSerializer,
         'create': PupilCreateSerializer,

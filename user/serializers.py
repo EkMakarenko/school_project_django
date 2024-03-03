@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from authentication.serializers import UserSerializer
 from user.models import Pupil, Teacher
+from authentication.serializers import UserSerializer
 
 
 class TeacherListSerializer(serializers.ModelSerializer):

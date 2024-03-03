@@ -5,7 +5,6 @@ from education_process.models import Grade, RatingItemStatus, Score, Subject
 
 # Register your models here.
 
-
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     """

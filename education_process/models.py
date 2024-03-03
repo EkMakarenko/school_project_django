@@ -76,7 +76,7 @@ class Score(models.Model):
                                 null=True, limit_choices_to={'user_status': TEACHER}, verbose_name='Teacher')
     score = models.SmallIntegerField(choices=SCORE_CHOICES, verbose_name='Mark')
     score_status = models.ForeignKey(RatingItemStatus, on_delete=models.CASCADE, verbose_name='Mark status')
-    created = models.DateField(verbose_name='Date of creation', blank=True, null=True)  #format='%Y-%m-%d', input_formats=['%Y-%m-%d', 'iso-8601']
+    created = models.DateField(verbose_name='Date of creation', blank=True, null=True)
 
     def __str__(self):
         return str(self.score)

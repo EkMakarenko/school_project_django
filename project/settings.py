@@ -48,7 +48,6 @@ CORE_APPS = [
 LOCAL_APPS = [
     'user',
     'education_process',
-    'user_account',
     'authentication',
 ]
 
@@ -57,6 +56,7 @@ THIRD_PARTY_APPS = [
     'django_filters',
     'djoser',
     'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 
 INSTALLED_APPS = CORE_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -97,7 +97,7 @@ DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '/api/auth/users/reset_password_confirm/{uid}/{token}'  # frontend url
 }
 
-MIDDLEWARE = [
+DJANGO_MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -106,6 +106,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CUSTOM_MIDDLEWARE = [
+    'education_process.middleware.RequestTimeMiddleware',
+]
+
+MIDDLEWARE = DJANGO_MIDDLEWARE + CUSTOM_MIDDLEWARE
+
 
 ROOT_URLCONF = 'project.urls'
 

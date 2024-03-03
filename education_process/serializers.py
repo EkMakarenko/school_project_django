@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from education_process.models import Grade, RatingItemStatus, Score, Subject
 from education_process.services import def_serializer
+from education_process.models import Grade, RatingItemStatus, Score, Subject
 
 
 class SubjectListSerializer(serializers.ModelSerializer):

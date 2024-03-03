@@ -12,6 +12,7 @@ django-filter = "*"
 pillow = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
+drf-yasg = "*"
 
 [dev-packages]
 

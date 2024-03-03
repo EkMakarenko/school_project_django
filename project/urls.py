@@ -14,14 +14,37 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from djoser.conf import settings
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+from rest_framework.authentication import TokenAuthentication
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title='School API',
+        description='School grade book',
+        default_version='v1',
+        terms_of_service='https://ourschool.com',
+        contact=openapi.Contact(email='ourschool@gmai.com'),
+        license=openapi.License(name='License')
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny, ],
+    authentication_classes=[TokenAuthentication, ]
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include([
-        path('', include('user.urls')),
-        path('', include('education_process.urls')),
-        path('', include('authentication.urls')),
-        ])),
-    ]
+    path('user/', include('user.urls')),
+    path('education/', include('education_process.urls')),
+    path('auth/', include('authentication.urls')),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
+]
+
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

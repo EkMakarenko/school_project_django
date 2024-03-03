@@ -1,11 +1,11 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 
 
 from project import settings
-from education_process.models import Subject, Grade
 from project.settings import TEACHER, PUPIL
+from education_process.models import Subject, Grade
+from user.managers import PersonManager, DeletedPersonManager
 
 
 # Create your models here.
@@ -33,7 +33,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return self.username
+        return str(self.username)
 
     @property
     def get_full_name(self):
@@ -53,6 +53,7 @@ class Teacher(models.Model):
     subjects = models.ManyToManyField(Subject, related_name='subject', verbose_name='Teach subject', blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='teacher', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='teachers/', blank=True, null=True)
+    is_deleted = models.BooleanField(null=False, default=False)
 
     @property
     def full_name(self):
@@ -68,6 +69,10 @@ class Teacher(models.Model):
         verbose_name = 'Teacher'
         verbose_name_plural = 'Teachers'
 
+    objects = PersonManager()
+    all_objects = models.Manager()
+    deleted_objects = DeletedPersonManager()
+
 
 class Pupil(models.Model):
     """
@@ -76,12 +81,13 @@ class Pupil(models.Model):
     group = models.ForeignKey(Grade, related_name='pupils', verbose_name='Studying a ___th grade',
                               on_delete=models.CASCADE)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='pupils', on_delete=models.CASCADE)
+    is_deleted = models.BooleanField(null=False, default=False)
 
     def __str__(self):
         return self.group
 
     def __str__(self):
-        return self.full_name()
+        return str(self.full_name())
 
     def full_name(self):
         return f'{self.user.last_name} {self.user.first_name} {self.user.middle_name}'
@@ -89,3 +95,7 @@ class Pupil(models.Model):
     class Meta:
         verbose_name = 'Pupil'
         verbose_name_plural = 'Pupils'
+
+    objects = PersonManager()
+    all_objects = models.Manager()
+    deleted_objects = DeletedPersonManager()
