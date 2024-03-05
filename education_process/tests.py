@@ -2,11 +2,11 @@ import os
 import json
 import django
 from django.apps import apps
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.test import TestCase
 
 from rest_framework import status
-from django.core.exceptions import ObjectDoesNotExist
 
 # Create your tests here.
 
@@ -33,8 +33,12 @@ class SubjectViewSetTests(TestCase):
         subjects = response.data
         print(subjects)
 
+        self.assertIn('count', subjects)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response['Content-Type'], 'application/json')
+        self.assertEqual(subjects['count'], 2)
+
+        self.assertIn('results', subjects)
+        subjects = subjects['results']
         self.assertTrue(isinstance(subjects, list))
 
         self.assertEqual(len(subjects), 2)
@@ -44,6 +48,7 @@ class SubjectViewSetTests(TestCase):
 
         self.assertEqual(subjects[1]['id'], self.subject_2.id)
         self.assertEqual(subjects[1]['name'], self.subject_2.name)
+
 
     def test_create_subject(self):
         print(3 * '______________________test_create_')

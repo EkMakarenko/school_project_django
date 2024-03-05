@@ -19,7 +19,7 @@ from education_process.serializers import (SubjectListSerializer, GradeListSeria
 class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectListSerializer
-    # pagination_class = SubjectPagination
+    pagination_class = SubjectPagination
     # permission_classes = [CustomPermissions]
     serializer_classes = {
         'list': SubjectListSerializer,
