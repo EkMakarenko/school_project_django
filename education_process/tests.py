@@ -49,7 +49,6 @@ class SubjectViewSetTests(TestCase):
         self.assertEqual(subjects[1]['id'], self.subject_2.id)
         self.assertEqual(subjects[1]['name'], self.subject_2.name)
 
-
     def test_create_subject(self):
         print(3 * '______________________test_create_')
         subject_data = {

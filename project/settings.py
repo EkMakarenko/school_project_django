@@ -183,7 +183,7 @@ USE_TZ = True
 TEACHER = 'teacher'
 PUPIL = 'pupil'
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'authentication.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 

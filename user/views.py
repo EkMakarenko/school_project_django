@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 
+from authentication.models import CustomUser
 from user.serializers import (
     PupilListSerializer,
     TeacherListSerializer,
@@ -15,7 +16,7 @@ from user.serializers import (
     TeacherImageUpdateSerializer
 )
 from user.services import TeacherService
-from user.models import Teacher, Pupil, User
+from user.models import Teacher, Pupil
 from authentication.serializers import UserSerializer
 from user.pagination import PupilPagination, TeacherPagination
 
@@ -23,7 +24,7 @@ from user.pagination import PupilPagination, TeacherPagination
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 

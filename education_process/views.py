@@ -2,6 +2,7 @@ from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
 from django_filters import rest_framework as django_filters
 
+from authentication.permissions import CustomPermissions
 from education_process.filters import ScoreFilter
 from education_process.models import Grade, RatingItemStatus, Score, Subject
 from education_process.pagination import ScorePagination, RatingItemStatusPagination, GradePagination, SubjectPagination

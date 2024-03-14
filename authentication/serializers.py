@@ -2,12 +2,12 @@ from rest_framework import serializers
 from djoser.serializers import UserSerializer as BaseUserSerializer
 from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer
 
-from user.models import User
+from authentication.models import CustomUser
 
 
 class UserSerializer(BaseUserSerializer):
     class Meta:
-        model = User
+        model = CustomUser
         fields = (
             "username",
             "password",
@@ -31,7 +31,7 @@ class UserSerializer(BaseUserSerializer):
 class UserCreateSerializer(BaseUserSerializer):
 
     class Meta(BaseUserCreateSerializer.Meta):
-        model = User
+        model = CustomUser
         fields = (
             "username",
             "password",
@@ -45,6 +45,6 @@ class UserCreateSerializer(BaseUserSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
 
     class Meta(BaseUserCreateSerializer.Meta):
-        model = User
+        model = CustomUser
         fields = '__all_'
         ref_name = 'CustomUserUpdateSerializer'

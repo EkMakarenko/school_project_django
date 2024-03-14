@@ -19,6 +19,10 @@ services:
     image: postgres:12-alpine
     ports:
       - '5432:5432'
+    environment:
+      - POSTGRES_DB=schooldb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     volumes:
       - ./data/postgres:/var/lib/postgresql/data/
     env_file:
@@ -32,4 +36,3 @@ networks:
 
 volumes:
   db:
-
