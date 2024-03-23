@@ -35,5 +35,3 @@ class ScoreAdmin(admin.ModelAdmin):
     Marks
     """
     list_display = ('pupil', 'subject', 'score', 'created', 'group')
-
-

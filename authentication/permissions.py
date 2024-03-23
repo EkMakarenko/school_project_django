@@ -7,11 +7,10 @@ class CustomPermissions(permissions.BasePermission):
     message = 'You don\'t have permission to access this resource.'
 
     def has_permission(self, request, view):
-        if request.сustomuser.is_authenticated:
-            if request.customuser.user_status == TEACHER or request.customuser.user.is_superuser:
+        if request.user.is_authenticated:
+            if request.user.user_status == TEACHER or request.user.is_superuser:
                 return True
-
-            if request.customuser.user_status == PUPIL and request.method in permissions.SAFE_METHODS:
-                return True
+            elif request.user.user_status == PUPIL:
+                return request.method in permissions.SAFE_METHODS
 
         return False

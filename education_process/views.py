@@ -21,7 +21,7 @@ class SubjectViewSet(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectListSerializer
     pagination_class = SubjectPagination
-    # permission_classes = [CustomPermissions]
+    permission_classes = [CustomPermissions]
     serializer_classes = {
         'list': SubjectListSerializer,
         'create': SubjectCreateSerializer,
@@ -30,6 +30,14 @@ class SubjectViewSet(viewsets.ModelViewSet):
     }
 
     def get_serializer_class(self):
+        """
+        Return the serializer class based on the current action.
+        This method retrieves the serializer class based on the current action. It looks up the action in the
+        `serializer_classes` dictionary and returns the corresponding serializer class. If the action is not found
+        in the dictionary, it returns the default `serializer_class`.
+
+        :return: Serializer class: The serializer class based on the current action.
+        """
         return self.serializer_classes.get(self.action, self.serializer_class)
 
 
@@ -45,6 +53,14 @@ class GradeViewSet(viewsets.ModelViewSet):
     }
 
     def get_serializer_class(self):
+        """
+        Return the serializer class based on the current action.
+        This method retrieves the serializer class based on the current action. It looks up the action in the
+        `serializer_classes` dictionary and returns the corresponding serializer class. If the action is not found
+        in the dictionary, it returns the default `serializer_class`.
+
+        :return: Serializer class: The serializer class based on the current action.
+        """
         return self.serializer_classes.get(self.action, self.serializer_class)
 
 
@@ -60,6 +76,14 @@ class RatingItemStatusViewSet(viewsets.ModelViewSet):
     }
 
     def get_serializer_class(self):
+        """
+        Return the serializer class based on the current action.
+        This method retrieves the serializer class based on the current action. It looks up the action in the
+        `serializer_classes` dictionary and returns the corresponding serializer class. If the action is not found
+        in the dictionary, it returns the default `serializer_class`.
+
+        :return: Serializer class: The serializer class based on the current action.
+        """
         return self.serializer_classes.get(self.action, self.serializer_class)
 
 
@@ -79,4 +103,12 @@ class ScoreViewSet(viewsets.ModelViewSet):
     }
 
     def get_serializer_class(self):
+        """
+        Return the serializer class based on the current action.
+        This method retrieves the serializer class based on the current action. It looks up the action in the
+        `serializer_classes` dictionary and returns the corresponding serializer class. If the action is not found
+        in the dictionary, it returns the default `serializer_class`.
+
+        :return: Serializer class: The serializer class based on the current action.
+        """
         return self.serializer_classes.get(self.action, self.serializer_class)

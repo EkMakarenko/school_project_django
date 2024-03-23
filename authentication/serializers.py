@@ -23,7 +23,7 @@ class UserSerializer(BaseUserSerializer):
         )
         extra_kwargs = {
             'password': {'write_only': True},
-            'username': {'write_only': True},
+            # 'username': {'write_only': True},
         }
         ref_name = 'CustomUserSerializer'
 

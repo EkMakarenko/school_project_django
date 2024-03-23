@@ -44,10 +44,27 @@ class TeacherViewSet(viewsets.ModelViewSet):
     }
 
     def get_serializer_class(self):
+        """
+        Return the serializer class based on the current action.
+        This method retrieves the serializer class based on the current action. It looks up the action in the
+        `serializer_classes` dictionary and returns the corresponding serializer class. If the action is not found
+        in the dictionary, it returns the default `serializer_class`.
+
+        :return: Serializer class: The serializer class based on the current action.
+        """
         return self.serializer_classes.get(self.action, self.serializer_class)
 
     @action(detail=True, methods=['patch'], url_path='update-image')
     def update_image(self, request, pk=None):
+        """
+        Update the image for a teacher object. This method updates the image for a teacher object based on the provided request data. It retrieves the teacher
+        object, initializes a serializer based on the current action, updates the image using the TeacherService, performs
+        the update, and returns a Response object with the updated data.
+
+        :param request:Request object containing the data for the update.
+        :param pk: Primary key of the teacher object to be updated (default is None).
+        :return: Response object: Response containing the updated data.
+        """
         teacher = self.get_object()
         serializer = self.serializer_classes.get(self.action, self.serializer_class)(teacher, request.data, partial=True)
 
@@ -74,4 +91,12 @@ class PupilViewSet(viewsets.ModelViewSet):
     }
 
     def get_serializer_class(self):
+        """
+        Return the serializer class based on the current action.
+        This method retrieves the serializer class based on the current action. It looks up the action in the
+        `serializer_classes` dictionary and returns the corresponding serializer class. If the action is not found
+        in the dictionary, it returns the default `serializer_class`.
+
+        :return: Serializer class: The serializer class based on the current action.
+        """
         return self.serializer_classes.get(self.action, self.serializer_class)
