@@ -10,38 +10,6 @@ from user.managers import PersonManager, DeletedPersonManager
 
 # Create your models here.
 
-
-# class User(AbstractUser):
-#     """
-#     User
-#     """
-#     GENDER_CHOICES = [('M', 'M'), ('F', 'F')]
-#     USER_STATUS_CHOICES = [(TEACHER, 'Teacher'), (PUPIL, 'Pupil')]
-#     username = models.CharField('Login', max_length=100, blank=True, null=True, unique=True)
-#     password = models.CharField('Password', blank=True)
-#     last_name = models.CharField('Last name', max_length=130, blank=True)
-#     first_name = models.CharField('First name', max_length=130, blank=True)
-#     middle_name = models.CharField('Middle name', max_length=130, blank=True)
-#     email = models.EmailField('Email', unique=True)
-#     phone = models.CharField(max_length=15, null=True, blank=True)
-#     gender = models.CharField('Gender', choices=GENDER_CHOICES, max_length=1)
-#     birth_date = models.DateField('Birth_date', blank=True, null=True)
-#     description = models.TextField('Description', blank=True)
-#     user_status = models.CharField('User status', choices=USER_STATUS_CHOICES, max_length=15)
-#
-#     USERNAME_FIELD = 'username'
-#     REQUIRED_FIELDS = ['email']
-#
-#     def __str__(self):
-#         return str(self.username)
-#
-#     @property
-#     def get_full_name(self):
-#         return f'{self.last_name} {self.first_name} {self.middle_name}'
-#
-#     objects = UserManager()
-
-
 class Teacher(models.Model):
     """
     Teacher
@@ -57,12 +25,21 @@ class Teacher(models.Model):
 
     @property
     def full_name(self):
+        """
+        Returns the full name of the user.
+        """
         return f'{self.user.last_name} {self.user.first_name} {self.user.middle_name}'
 
     def get_description(self):
+        """
+        Returns the description of the user.
+        """
         return {self.user.description}
 
     def get_phone(self):
+        """
+        Returns the phone number of the user.
+        """
         return {self.user.phone}
 
     class Meta:
@@ -84,12 +61,21 @@ class Pupil(models.Model):
     is_deleted = models.BooleanField(null=False, default=False)
 
     def __str__(self):
+        """
+        Returns a string representation of the group.
+        """
         return self.group
 
     def __str__(self):
+        """
+        Returns a string representation of the full name.
+        """
         return str(self.full_name())
 
     def full_name(self):
+        """
+        Returns the full name of the user.
+        """
         return f'{self.user.last_name} {self.user.first_name} {self.user.middle_name}'
 
     class Meta:

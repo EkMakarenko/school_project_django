@@ -12,6 +12,11 @@ class TeacherListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+        """
+        Create a new teacher instance.
+        :param validated_data: Validated data for creating the teacher.
+        :return: The created teacher instance.
+        """
         user_data = validated_data.pop('user')
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
         teacher, created = Teacher.objects.update_or_create(
@@ -19,10 +24,14 @@ class TeacherListSerializer(serializers.ModelSerializer):
             group_manager=validated_data.pop('group_manager'),
             position=validated_data.pop('position')
         )
-
         return teacher
 
     def get_user(self, obj):
+        """
+        Get the full name of the user associated with the object.
+        :param obj: The object for which to retrieve the user's full name.
+        :return: The full name of the user associated with the object.
+        """
         return obj.user.get_full_name
 
 
@@ -34,6 +43,11 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+        """
+        Create a new teacher instance.
+        :param validated_data: Validated data for creating the teacher.
+        :return: The created teacher instance.
+        """
         user_data = validated_data.pop('user')
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
         teacher, created = Teacher.objects.update_or_create(
@@ -41,7 +55,6 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
             group_manager=validated_data.pop('group_manager'),
             position=validated_data.pop('position')
         )
-
         return teacher
 
 
@@ -75,6 +88,11 @@ class PupilListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_user_name(self, obj):
+        """
+        Get the full name of the user associated with the object.
+        :param obj: The object for which to retrieve the user's full name.
+        :return: The full name of the user associated with the object.
+        """
         return obj.user.get_full_name
 
 
@@ -86,13 +104,17 @@ class PupilCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+        """
+        Create a new pupil instance.
+        :param validated_data: Validated data containing user and group information.
+        :return: The created or updated Pupil instance.
+        """
         user_data = validated_data.pop('user')
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
         pupil, created = Pupil.objects.update_or_create(
             user=user,
             group=validated_data.pop('group')
         )
-
         return pupil
 
 

@@ -50,7 +50,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
         `serializer_classes` dictionary and returns the corresponding serializer class. If the action is not found
         in the dictionary, it returns the default `serializer_class`.
 
-        :return: Serializer class: The serializer class based on the current action.
+        :return: The serializer class based on the current action.
         """
         return self.serializer_classes.get(self.action, self.serializer_class)
 
@@ -63,7 +63,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
 
         :param request:Request object containing the data for the update.
         :param pk: Primary key of the teacher object to be updated (default is None).
-        :return: Response object: Response containing the updated data.
+        :return: Response containing the updated data.
         """
         teacher = self.get_object()
         serializer = self.serializer_classes.get(self.action, self.serializer_class)(teacher, request.data, partial=True)
@@ -97,6 +97,6 @@ class PupilViewSet(viewsets.ModelViewSet):
         `serializer_classes` dictionary and returns the corresponding serializer class. If the action is not found
         in the dictionary, it returns the default `serializer_class`.
 
-        :return: Serializer class: The serializer class based on the current action.
+        :return: The serializer class based on the current action.
         """
         return self.serializer_classes.get(self.action, self.serializer_class)

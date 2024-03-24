@@ -23,6 +23,3 @@ def def_serializer() -> None:
 
     def get_score_status(self, obj):
         return obj.subject.get_score_status
-
-    def get_group(self, obj):
-        return obj.grade.get_grade

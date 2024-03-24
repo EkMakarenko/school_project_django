@@ -25,11 +25,17 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns the string representation of the object based on its username.
+        """
         return str(self.username)
 
     @property
-    def get_full_name(self):
+    def get_full_name(self) -> str:
+        """
+        Returns the full name of the user.
+        """
         return f'{self.last_name} {self.first_name} {self.middle_name}'
 
     objects = UserManager()

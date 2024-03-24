@@ -29,28 +29,24 @@ class SubjectRetrieveSerializer(serializers.ModelSerializer):
 
 
 class GradeListSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Grade
         fields = ('id', 'grade')
 
 
 class GradeCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Grade
         fields = ('grade',)
 
 
 class GradeUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Grade
         fields = ('grade',)
 
 
 class GradeRetrieveSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Grade
         fields = ('grade',)
@@ -81,7 +77,6 @@ class RatingItemStatusRetrieveSerializer(serializers.ModelSerializer):
 
 
 class ScoreListSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Score
         fields = ('id', 'get_pupil', 'get_subject', 'score', 'get_score_status', 'created', 'get_group')
@@ -90,14 +85,12 @@ class ScoreListSerializer(serializers.ModelSerializer):
 
 
 class ScoreCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Score
         fields = ('subject', 'group', 'pupil', 'score', 'score_status', 'created')
 
 
 class ScoreUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Score
         fields = ('subject', 'group', 'pupil', 'score', 'score_status', 'created')
@@ -106,7 +99,6 @@ class ScoreUpdateSerializer(serializers.ModelSerializer):
 
 
 class ScoreRetrieveSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Score
         fields = ('id', 'get_pupil', 'get_subject', 'score', 'get_score_status', 'created', 'get_group')

@@ -13,7 +13,10 @@ class Subject(models.Model):
     """
     name = models.CharField('Name', max_length=100)
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns the name of the object when converted to a string.
+        """
         return self.name
 
     class Meta:
@@ -27,7 +30,10 @@ class Grade(models.Model):
     """
     grade = models.CharField('___ th grade', max_length=20)
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns the grade of the object when converted to a string.
+        """
         return self.grade
 
     class Meta:
@@ -42,9 +48,15 @@ class RatingItemStatus(models.Model):
     name = models.CharField('Mark status', max_length=15)
 
     def __str__(self):
+        """
+        Returns the name of the object when converted to a string.
+        """
         return self.name
 
-    def get_score_status(self):
+    def get_score_status(self) -> str:
+        """
+        Returns the name of the score status associated with the object.
+        """
         return self.name
 
     class Meta:
@@ -78,19 +90,34 @@ class Score(models.Model):
     score_status = models.ForeignKey(RatingItemStatus, on_delete=models.CASCADE, verbose_name='Mark status')
     created = models.DateField(verbose_name='Date of creation', blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns the string representation of the object based on its score.
+        """
         return str(self.score)
 
-    def get_subject(self):
+    def get_subject(self) -> str:
+        """
+        Returns the name of the subject associated with the object.
+        """
         return f'{self.subject.name}'
 
     def get_pupil(self):
+        """
+        Returns the full name of the pupil associated with the object.
+        """
         return f'{self.pupil.last_name} {self.pupil.first_name} {self.pupil.middle_name}'
 
     def get_group(self):
+        """
+        Returns the grade of the group associated with the object.
+        """
         return f'{self.group.grade}'
 
     def get_score_status(self):
+        """
+        Returns the name of the score status associated with the object.
+        """
         return f'{self.score_status.name}'
 
     class Meta:
